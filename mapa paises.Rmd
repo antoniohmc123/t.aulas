@@ -1,0 +1,33 @@
+---
+title: "SINPROP"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(data.table, dplyr, leaflet, leaflet.extras, leaflet.minicharts, plotly, rgdal, tidyr) # carregar os pacotes
+
+library(readxl)
+
+```{r sh, echo=FALSE, warning=FALSE, message=FALSE}
+
+paises <- read_excel("C:/Users/Antonio Carlos/Downloads/paises.xlsx")
+
+```
+
+### Escolas do Paulista
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+leaflet(paises) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    lng = ~paises$Longitude,
+    lat = ~paises$Latitude,
+    clusterOptions = markerClusterOptions(),
+    color = "blue",
+    popup = ~paste(paises$Pais)
+  )
+
+```
